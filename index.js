@@ -2,20 +2,30 @@ const http = require("http");
 const PORT = 3200;
 
 const server = http.createServer()
-server.on('request', (req, res) => {
-    if (req.url === "/home") {
-        // res.writeHead(200, {
-        //     'Content-Type': "application/json",
-        // });
 
-        // Another method to set header
+const data = [
+    {
+        id: 0,
+        name: "Kelvin"
+    },
+    {
+        id: 1,
+        name: "Hello"
+    },
+]
+
+server.on('request', (req, res) => {
+    const urlSplit = req.url.split('/')
+    if (urlSplit[1] === "home") {
         res.statusCode = 200;
         res.setHeader("Content-Type", "application/json")
-        res.end(JSON.stringify({
-            id: 1,
-            name: "Understanding Node Server!",
-        }));
-    } else if (req.url === "/message") {
+        if (urlSplit.length === 3) {
+            const dataIndex = +urlSplit[2]
+            res.end(JSON.stringify(data[dataIndex]))
+        } else[
+            res.end(JSON.stringify(data))
+        ]
+    } else if (urlSplit[1] === "message") {
         // Header set to Html
         res.statusCode = 200;
         res.setHeader("Content-Type", "text/html")
